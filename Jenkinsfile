@@ -9,6 +9,7 @@ pipeline {
 
     stage('Clone') {
       steps {
+        git branch: 'main',
         git 'https://github.com/SheetalKadolkar/simple-ecommerce-devops.git'
       }
     }
