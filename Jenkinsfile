@@ -45,13 +45,13 @@ pipeline {
         }
 
           stage("Deploy to EKS") {
-            steps {
-            sh '''
-            kubectl get nodes
-            kubectl set image deployment/ecommerce-deployment \
-            ecommerce=${IMAGE_NAME}:${IMAGE_TAG}
-
-            kubectl rollout status deployment/ecommerce-deployment
+              steps {
+                  sh '''
+                        aws eks update-kubeconfig --region us-east-1 --name ecommerce-cluster
+                        kubectl get nodes
+                        kubectl apply -f k8s/deployment.yaml
+                        kubectl apply -f k8s/service.yaml
+                        kubectl rollout status deployment/ecommerce-app
         '''
     }
 }
