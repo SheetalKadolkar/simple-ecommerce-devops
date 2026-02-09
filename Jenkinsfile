@@ -44,19 +44,18 @@ pipeline {
             }
         }
 
-        stage("Deploy to EKS") {
+          stage("Deploy to EKS") {
             steps {
-                withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
-                    sh '''
-                        kubectl get nodes
-                        kubectl set image deployment/ecommerce-deployment \
-                        ecommerce=${IMAGE_NAME}:${IMAGE_TAG} -n ${KUBE_NAMESPACE}
+            sh '''
+            kubectl get nodes
+            kubectl set image deployment/ecommerce-deployment \
+            ecommerce=${IMAGE_NAME}:${IMAGE_TAG}
 
-                        kubectl rollout status deployment/ecommerce-deployment -n ${KUBE_NAMESPACE}
-                    '''
-                }
-            }
-        }
+            kubectl rollout status deployment/ecommerce-deployment
+        '''
+    }
+}
+
 
     }
 
