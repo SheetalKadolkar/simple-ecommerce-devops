@@ -10,10 +10,15 @@ pipeline {
     stage('Clone') {
       steps {
         git branch: 'main',
-        git 'https://github.com/SheetalKadolkar/simple-ecommerce-devops.git'
+        url  'https://github.com/SheetalKadolkar/simple-ecommerce-devops.git'
       }
     }
 
+    stage("Docker Check") {
+      steps {
+        sh 'docker --version'
+        }
+        }
     stage('Build') {
       steps {
         sh 'docker build -t $IMAGE:$BUILD_NUMBER .'
